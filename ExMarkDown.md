@@ -18,16 +18,13 @@ sub title
 ***
 
 
-* english is good, but korean is not good.
-* 영어는 잘써지는데, 한글은 잘 안써짐.
-
-
-***
-
-
 문장 앞에 # 갯수에 따라 h1 ~ h6
 
 # h1
+## h2
+### h3
+#### h4
+##### h5
 ###### h6
 
 
