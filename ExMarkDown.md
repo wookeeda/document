@@ -100,10 +100,7 @@ list 만드는 방법 쉽게 1. 2. 3. 해도 되고
 
 ![]&lt;image_url "이미지 설명은 쌍따옴표 사이에 쓰면 된다. 생략 가능"&gt;
 
-![www.google.com](https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png "option")
-
 ![](https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png "option")
-
 
 
 *****
