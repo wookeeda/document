@@ -1,24 +1,35 @@
-1) title
-=================
+title
+=
+
+sub title
+-
 
 
-2) sub title
------------
 
 * english is good, but korean is not good.
 
 
-#3) h1
+#h1
 ~
 ######h6
 
 
-4) block
+block
 >child1
 >>child2
 
 
-5) list
+list
 1. first
 2. second
 3. third
+
+list2
+*first
+*second
+*third
+ *child
+ 
++fisrt
+ +second
+  +third
