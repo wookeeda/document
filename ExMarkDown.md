@@ -56,7 +56,7 @@ hr
 
 [linkTest2](www.google.com)
 
-<www.google.com>
+www.google.com
 
 
 
