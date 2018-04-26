@@ -78,7 +78,7 @@ list 만드는 방법 쉽게 1. 2. 3. 해도 되고
 ***
 
 
-[link이름](url)
+<pre>[link이름](url)</pre>
 
 [이렇게 됨 누르면 구글로 간다](www.google.com)
 
