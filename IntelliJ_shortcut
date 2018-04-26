@@ -1,0 +1,22 @@
+# 단축키가 엄청 많구나
+
+"psvm" + tab = main method generate
+
+"sout" = System.out.println
+
+alt + 1 = move project view
+
+escape(esc key) = move editor view
+
+alt + insert = new file
+
+ctrl + alt + insert = new file in the same directory
+
+
+
+alt + enter = quick fix
+
+
+
+# need to learn "Mark down"
+[ref](https://gist.github.com/ihoneymon/652be052a0727ad59601)
