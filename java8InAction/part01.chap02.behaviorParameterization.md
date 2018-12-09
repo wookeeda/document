@@ -184,3 +184,7 @@
     button.setOnAction((ActionEvent event) -> label.setText("sent"));
     ```
     
+## summary
+1. behavior parameterization에서는 method 내부적으로 다양한 동작을 수행할 수 있도록 코드를 method parameter로 전달한다.
+2. 요구사항에 더 잘 대응할 수 있는 코드를 구현할 수 있다.
+3. anonymous class로 어느정도 코드를 깔끔하게 할 수 있지만, Lambda가 짱이다.
