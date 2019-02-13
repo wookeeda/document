@@ -64,39 +64,33 @@ public class Solution {
 
         for (int t = 1; t <= testCaseCnt; t++) {
             String str = br.readLine();
+            String strOriginal = str;
 
             List<String> list = new ArrayList<>();
-            List<String> list2 = new ArrayList<>();
 
-            int index = str.indexOf("101");
-            str = str.substring(index);
-            if(index == -1 || str.length() < 95){
+            // 1. 정방향 돌고
+            int index = strOriginal.indexOf("101");
+            strOriginal = strOriginal.substring(index);
+            if(index == -1 || strOriginal.length() < 95){
                 System.out.printf("#%d 0\n", t);
                 continue;
             }
 
-            while(str.indexOf("101") != -1){
-                index = str.indexOf("101");
-                str = str.substring(index);
-                if(str.length() < 95){
+            while(strOriginal.indexOf("101") != -1){
+                index = strOriginal.indexOf("101");
+                strOriginal = strOriginal.substring(index);
+                if(strOriginal.length() < 95){
                     break;
                 }
-                String target = str.substring(0, 95);
+                String target = strOriginal.substring(0, 95);
                 String dividerStr = target.substring(45, 50);
                 String endStr = target.substring(92,95);
 
                 // 중간과 끝이 유효한 데이터가 아니면 넘어가
                 if( !"01010".equals(dividerStr) || !"101".equals(endStr) ){
-                    str = str.substring(2);
+                    strOriginal = strOriginal.substring(2);
                     continue;
                 }
-
-                // 마지막 6자가 mapC에 속해있지 않으면 거꾸로 확인해봐야 함.
-                String lastNum = target.substring(85, 92);
-                if( !mapC.containsKey(lastNum)){
-                    target = new StringBuilder(target).reverse().toString();
-                }
-
 
                 // 쉬운 partC부터 발라내자.
                 // c코드가 없으면 중단
@@ -112,7 +106,7 @@ public class Solution {
                     c.append(mapC.get(code));
                 }
                 if(!isValid){
-                    str = str.substring(2);
+                    strOriginal = strOriginal.substring(2);
                     continue;
                 }
 
@@ -139,12 +133,12 @@ public class Solution {
                     }
                 }
                 if(!isValid){
-                    str = str.substring(2);
+                    strOriginal = strOriginal.substring(2);
                     continue;
                 }
 
                 if(!mapA.containsKey(aCode.toString())) {
-                    str = str.substring(2);
+                    strOriginal = strOriginal.substring(2);
                     continue;
                 }else {
                     a.append(mapA.get(aCode.toString()));
@@ -170,10 +164,112 @@ public class Solution {
 
                 if(c.charAt(5) - '0' == checkValue) {
                     list.add(barcode.toString());
-                    list2.add(target);
-                    str = str.substring(95);
+                    strOriginal = strOriginal.substring(2);
                 }else {
-                    str = str.substring(2);
+                    strOriginal = strOriginal.substring(2);
+                }
+            }
+
+            // 2. 역방향 돌자
+            String strReverse = new StringBuilder(str).reverse().toString();
+            index = strReverse.indexOf("101");
+            strReverse = strReverse.substring(index);
+            if(index == -1 || strReverse.length() < 95){
+                System.out.printf("#%d 0\n", t);
+                continue;
+            }
+
+            while(strReverse.indexOf("101") != -1){
+                index = strReverse.indexOf("101");
+                strReverse = strReverse.substring(index);
+                if(strReverse.length() < 95){
+                    break;
+                }
+                String target = strReverse.substring(0, 95);
+                String dividerStr = target.substring(45, 50);
+                String endStr = target.substring(92,95);
+
+                // 중간과 끝이 유효한 데이터가 아니면 넘어가
+                if( !"01010".equals(dividerStr) || !"101".equals(endStr) ){
+                    strReverse = strReverse.substring(2);
+                    continue;
+                }
+
+                // 쉬운 partC부터 발라내자.
+                // c코드가 없으면 중단
+                boolean isValid = true;
+                StringBuilder c = new StringBuilder();
+                String partC = target.substring(50, 92);
+                for (int i = 0; i < 6; i++) {
+                    String code = partC.substring(i*7, (i+1)*7);
+                    if(!mapC.containsKey(code)) {
+                        isValid = false;
+                        break;
+                    }
+                    c.append(mapC.get(code));
+                }
+                if(!isValid){
+                    strReverse = strReverse.substring(2);
+                    continue;
+                }
+
+                // partB
+                StringBuilder b = new StringBuilder();
+                StringBuilder aCode = new StringBuilder();
+                StringBuilder a = new StringBuilder();
+                String partB = target.substring(3, 45);
+                for (int i = 0; i < 6; i++) {
+                    String code = partB.substring(i*7, (i+1)*7);
+
+                    // L코드 거나
+                    if( mapBL.containsKey(code)){
+                        b.append(mapBL.get(code));
+                        aCode.append("L");
+//                        G코드 거나
+                    }else if (mapBG.containsKey(code)){
+                        b.append(mapBG.get(code));
+                        aCode.append("G");
+                    }else{
+                        // L도 G도 아니면 유효하지 않음.
+                        isValid = false;
+                        break;
+                    }
+                }
+                if(!isValid){
+                    strReverse = strReverse.substring(2);
+                    continue;
+                }
+
+                if(!mapA.containsKey(aCode.toString())) {
+                    strReverse = strReverse.substring(2);
+                    continue;
+                }else {
+                    a.append(mapA.get(aCode.toString()));
+                }
+
+//                System.out.println("a : " + a);
+//                System.out.println("b : " + b);
+//                System.out.println("c : " + c);
+
+                StringBuilder barcode = new StringBuilder();
+                barcode.append(a).append(b).append(c);
+
+                //검증
+                int sum = 0;
+                for (int i = 0; i < barcode.length()-1; i++) {
+                    if(i % 2 == 0) {
+                        sum += barcode.charAt(i) - '0';
+                    }else {
+                        sum += (barcode.charAt(i) - '0') * 3;
+                    }
+                }
+                int checkValue = 10 - (sum % 10);
+
+                if(c.charAt(5) - '0' == checkValue) {
+                    list.add(barcode.toString());
+                    strReverse = strReverse.substring(2);
+                }else {
+                    strReverse = strReverse.substring(2);
                 }
             }
 
@@ -184,9 +280,9 @@ public class Solution {
 
             Collections.sort(list);
 //            System.out.println("결과");
-            System.out.printf("#%d %d ", t, list.size());
+            System.out.printf("#%d %d", t, list.size());
             for (int i = 0; i < list.size(); i++) {
-                System.out.print(list.get(i) + " ");
+                System.out.print(" " + list.get(i));
             }
             System.out.println();
 //            System.out.println("숫자로는");
