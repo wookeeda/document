@@ -71,9 +71,10 @@ public class Solution {
             // 1. 정방향 돌고
             int index = strOriginal.indexOf("101");
             strOriginal = strOriginal.substring(index);
+
+            boolean originalFail = false;
             if(index == -1 || strOriginal.length() < 95){
-                System.out.printf("#%d 0\n", t);
-                continue;
+                originalFail = true;
             }
 
             while(strOriginal.indexOf("101") != -1){
@@ -172,9 +173,10 @@ public class Solution {
 
             // 2. 역방향 돌자
             String strReverse = new StringBuilder(str).reverse().toString();
+
             index = strReverse.indexOf("101");
             strReverse = strReverse.substring(index);
-            if(index == -1 || strReverse.length() < 95){
+            if(originalFail && index == -1 || strReverse.length() < 95){
                 System.out.printf("#%d 0\n", t);
                 continue;
             }
